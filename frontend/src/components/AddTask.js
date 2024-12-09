@@ -12,13 +12,16 @@ function AddTask() {
         fetch('http://localhost:5000/tasks', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title, description, due_date: dueDate }),
+            body: JSON.stringify({ title, description, due_date: dueDate })
+            
         }).then(response => response.json())
           .then(data => {
+            
               console.log('Success:', data);
               navigate('/');
           })
           .catch(error => {
+            
               console.error('Error:', error);
           });
     };

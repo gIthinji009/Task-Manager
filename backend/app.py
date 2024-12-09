@@ -1,10 +1,15 @@
 from flask import Flask, jsonify, request
 from db_setup import init_db, db
+from flask_cors import CORS
 from models import Task
 import jwt
 import datetime
 
 app = Flask(__name__)
+
+# Allow requests from http://localhost:3000, which is your frontend's origin
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 app.config['SECRET_KEY'] = 'your_jwt_secret'
 
 init_db(app)
@@ -57,4 +62,4 @@ def delete_task(task_id):
     return jsonify({'message': 'Task deleted'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
