@@ -34,7 +34,7 @@ function Dashboard() {
             <ul>
                 {tasks.map((task) => (
                     <li key={task.id}>
-                        <Link to={`http://localhost:5000/tasks/${task.id}`} className="task-title">{task.title}</Link>
+                        <Link to={`/tasks/${task.id}`} className="task-title">{task.title}</Link>
                         <p className="task-status">Status: {task.status}</p>
                         <button onClick={() => deleteTask(task.id)} className="button">Delete</button>
                     </li>
