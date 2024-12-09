@@ -13,14 +13,14 @@ function TaskDetails() {
     }, [id]);
     
     const deleteTask = () => {
-      fetch(`/tasks/${id}`, {
+      fetch(`http://localhost:5000/tasks/${id}`, {
           method: 'DELETE',
       })
       .then(() => navigate('/'));
   };
 
     const changeStatus = (newStatus) => {
-    fetch(`/tasks/${id}/status`, {
+    fetch(`http://localhost:5000/tasks/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -39,8 +39,8 @@ function TaskDetails() {
             <p>{task.description}</p>
             <p>Due Date: {task.due_date}</p>
             <p>Status: {task.status}</p>
-            <button onClick={() => changeStatus('complete')}>Mark as Complete</button>
-            <button onClick={() => changeStatus('in progress')}>Mark as In Progress</button>
+            <button onClick={() => changeStatus('complete')}>Complete</button>
+            <button onClick={() => changeStatus('in progress')}>In Progress</button>
             <button onClick={deleteTask}>Delete Task</button>
         </div>
     );
