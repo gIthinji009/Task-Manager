@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function TaskDetails() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [task, setTask] = useState(null);
 
     useEffect(() => {
@@ -10,6 +11,23 @@ function TaskDetails() {
             .then((res) => res.json())
             .then((data) => setTask(data));
     }, [id]);
+    
+    const deleteTask = () => {
+      fetch(`/tasks/${id}`, {
+          method: 'DELETE',
+      })
+      .then(() => navigate('/'));
+  };
+
+    const changeStatus = (newStatus) => {
+    fetch(`/tasks/${id}/status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+    })
+    .then((res) => res.json())
+    .then((data) => setTask(data));
+};
 
     if (!task) {
         return <div className="container">Loading...</div>;
@@ -21,6 +39,9 @@ function TaskDetails() {
             <p>{task.description}</p>
             <p>Due Date: {task.due_date}</p>
             <p>Status: {task.status}</p>
+            <button onClick={() => changeStatus('complete')}>Mark as Complete</button>
+            <button onClick={() => changeStatus('in progress')}>Mark as In Progress</button>
+            <button onClick={deleteTask}>Delete Task</button>
         </div>
     );
 }

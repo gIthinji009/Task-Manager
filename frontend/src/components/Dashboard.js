@@ -16,6 +16,17 @@ function Dashboard() {
             });
     }, []);
 
+
+    const deleteTask = (taskId) => {
+      fetch(`/tasks/${taskId}`, {
+          method: 'DELETE',
+      })
+      .then(() => {
+          setTasks(tasks.filter(task => task.id !== taskId));
+      });
+  };
+
+
     return (
         <div className="container">
             <h1>Task Dashboard</h1>
@@ -25,6 +36,7 @@ function Dashboard() {
                     <li key={task.id}>
                         <Link to={`/tasks/${task.id}`} className="task-title">{task.title}</Link>
                         <p className="task-status">Status: {task.status}</p>
+                        <button onClick={() => deleteTask(task.id)} className="button">Delete</button>
                     </li>
                 ))}
             </ul>

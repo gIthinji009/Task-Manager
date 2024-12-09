@@ -53,6 +53,17 @@ def update_task(task_id):
         task.status = data['status']
     db.session.commit()
     return jsonify(task.to_dict())
+@app.route('/tasks/<int:task_id>/status', methods=['PUT'])
+def update_task_status(task_id):
+    data = request.json
+    task = Task.query.get_or_404(task_id)
+    if 'status' in data:
+        task.status = data['status']
+        db.session.commit()
+        return jsonify(task.to_dict())
+    else:
+        return jsonify({'error': 'No status provided'}), 400
+
 
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
